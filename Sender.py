@@ -2,8 +2,8 @@ from socket import *
 import time
 
 ReceiverIp = 'localhost'
-ReceiverPort = 12000
-MSS = 1984           #Maximum segment size
+ReceiverPort = 1200
+MSS = 2040           #Maximum segment size
 N = 3 #windows size-> how many unacknowledged packets can be in transit at any given time
 
 def read(filee):
@@ -26,7 +26,7 @@ def make_packets(flag, packet_id, data, file_id):
         trailer_bits = 0xFFFF   #lesa mwselnash l2a5er packet 
     else:    
         trailer_bits = 0x0000
-    trailer_bits = trailer_bits.to_bytes(2, byteorder='big')
+    trailer_bits = trailer_bits.to_bytes(4, byteorder='big')
     Packet = file_id + packet_id+trailer_bits + data 
     return Packet
 
