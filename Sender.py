@@ -3,7 +3,7 @@ import time
 
 ReceiverIp = 'localhost'
 ReceiverPort = 12000
-MSS = 2048           #Maximum segment size
+MSS = 1984           #Maximum segment size
 N = 3 #windows size-> how many unacknowledged packets can be in transit at any given time
 
 def read(filee):
