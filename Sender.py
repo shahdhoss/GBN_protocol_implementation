@@ -59,7 +59,7 @@ def sender(filee, receiver_port, ip_address):
                 try:
                     AckPacket, _ = SenderSocket.recvfrom(1024)   #return tuple -> data + address of the sender - me7adgin awl wa7ed bs
                     AckNumber = int.from_bytes(AckPacket[:2], byteorder='big')  
-                    if SendBase<=AckNumber:  
+                    if SendBase<=AckNumber:  #'<'3lshan momken yb3at nafs el packet kaza mara
                         SendBase = AckNumber + 1 
                         Timer = False 
                 except timeout:  
