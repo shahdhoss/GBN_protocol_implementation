@@ -17,6 +17,7 @@ packet_ids=[]
 while True:
     message, client_address= server_socket.recvfrom(2048)
     packet_id=get_packetid(message)
+    print(packet_id.decode())
     if(packet_id==packet_ids[-1]+1):         #making sure that its the right packet, before saving its data. Knowing that packetids are numbers in sequence
         server_socket.sendto(packet_ids[-1].encode(),client_address) #sending ack
         packet_ids.append(packet_id)

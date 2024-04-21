@@ -1,9 +1,9 @@
 from socket import *
 import time
 
-RecieverIp = 'localhost'
+ReceiverIp = 'localhost'
 ReceiverPort = 12000
-MSS = 800            #Maximum segment size
+MSS = 2048           #Maximum segment size
 N = 3 #windows size-> how many unacknowledged packets can be in transit at any given time
 
 def read(filee):
@@ -15,17 +15,19 @@ def read(filee):
                 break
             Data.append(Chunks)
     return Data
-    #print(Data)
+
+filee= 'Computer Networks Project/small file.jpeg'
+print(read(filee))
 
 def make_packets(flag, packet_id, data, file_id):
-    packet_id = packet_id.to_bytes(2, byteorder='big').decode()  
-    file_id = file_id.to_bytes(2, byteorder='big').decode() 
+    packet_id = packet_id.to_bytes(2, byteorder='big') 
+    file_id = file_id.to_bytes(2, byteorder='big')
     if flag:  
         trailer_bits = 0xFFFF   #lesa mwselnash l2a5er packet 
     else:    
         trailer_bits = 0x0000
-    trailer_bits = trailer_bits.to_bytes(2, byteorder='big').decode()  
-    Packet = file_id + packet_id+trailer_bits + data.decode() 
+    trailer_bits = trailer_bits.to_bytes(2, byteorder='big')
+    Packet = file_id + packet_id+trailer_bits + data 
     return Packet
 
 def send_to_receiver(packets, ip_address, port):
@@ -43,8 +45,8 @@ def sender(filee, receiver_port, ip_address):
     for NextSeqNum in range(SendBase, min(SendBase + N, PacketLength)):   #to ensure enna ma3adenash size el packets
          #Makepacket ->it adds (sequence number,checksums,headers)
         # yb3at tany el packets elli ma7asalahash ack
-        Packet = make_packets(NextSeqNum == PacketLength - 1, NextSeqNum, Packets[NextSeqNum], 1) #awl goz2 ensure en a5er packet wslet
-        SenderSocket.sendto(Packet.encode(), (ip_address, receiver_port))  # Encode packet to bytes before sending
+        Packet = make_packets(NextSeqNum ==PacketLength - 1, NextSeqNum, Packets[NextSeqNum], 1) #awl goz2 ensure en a5er packet wslet
+        SenderSocket.sendto(Packet, (ip_address, receiver_port))  # Encode packet to bytes before sending
         print(f"Packet {NextSeqNum} sent..")
         if not Timer:  
             StartTime = time.time()
@@ -57,7 +59,7 @@ def sender(filee, receiver_port, ip_address):
                 break
             else:
                 try:
-                    AckPacket, _ = SenderSocket.recvfrom(1024)   #return tuple -> data + address of the sender - me7adgin awl wa7ed bs
+                    AckPacket, _ = SenderSocket.recvfrom(2048)   #return tuple -> data + address of the sender - me7adgin awl wa7ed bs
                     AckNumber = int.from_bytes(AckPacket[:2], byteorder='big')  
                     if SendBase<=AckNumber:  #'<'3lshan momken yb3at nafs el packet kaza mara
                         SendBase = AckNumber + 1 
@@ -68,5 +70,5 @@ def sender(filee, receiver_port, ip_address):
     print("Packets are sent successfully!")
     SenderSocket.close()
 
-filee = 'Computer Networks Project/small file.jpeg'
+
 sender(filee, ReceiverPort, ReceiverIp)
