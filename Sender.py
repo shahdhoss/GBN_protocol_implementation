@@ -19,6 +19,16 @@ def read(filee):
 
 filee = 'Computer Networks Project/small file.jpeg'
 #read('filee')""" 
+def MakePackets(Flag,PacketId,Data,FileId):
+    FileId = file_id.to_bytes(2, byteorder='big')
+    PacketId = PacketId.bytes(2,byteordeق= 'big')
+    if Flag:
+        TrailerBits= 0xFFFF
+    else:
+        TrailerBits =  0x0000
+    TrailerBits= TrailerBits.to_bytes(2, byteorder='big')
+    Packet = FileId+ PacketId+ TrailerBits+Data
+    return Packet
 
 def Sender(Filee,RecieverPort,IpAddress):
     Packets = read(filee) #data
@@ -30,12 +40,6 @@ def Sender(Filee,RecieverPort,IpAddress):
         #create packet ->it add (sequence number,checksums,headers)
         Packet =create_packet(i,FileId,Packets[i],i==len(packets)-1) #a5er goz2 ensure en a5er packet wslet
         SenderSocket.sendto(Packet,(IpAddress,ReceiverPort))
-        wait_for_ack(SenderSocket)
-    SenderSocket.close()
-
+      #----
+sender(filee,ReceiverIp, ReceiverPort)
 #Determine time needed to send ack else yb2a fi moskela..send again
-def Ack_status(Socket):
-    Start = time.time()
-    while time.time() -Start<Timeout:
-        
-
