@@ -26,14 +26,13 @@ while True:
     packet_id=get_packetid(message)
     print("this is the packet id:", packet_id)
     if len(packet_ids)==0:
-        packet_ids.append(str(packet_id))
+        packet_ids.append(packet_id)
     if int(packet_id)==int(packet_ids[-1])+1 or len(packet_ids)==1 :         #making sure that its the right packet, before saving its data. Knowing that packetids are numbers in sequence
         if len(packet_ids)==0:
             continue
         else:
-            packet_ids.append(str(packet_id))
-        server_socket.sendto(packet_ids[-1].encode(),client_address) #sending ack
-        packet_ids.append(packet_id)
+            packet_ids.append(packet_id)
+        server_socket.sendto(packet_ids[-1].to_bytes(2,byteorder='big'),client_address) #sending ack
         trailing=get_trailing(message)
         print("this is the trailing: ", trailing)
         message=get_data(message)
@@ -47,4 +46,4 @@ while True:
             file=open('sent_image.jpeg')
             file.write()
     else:
-        server_socket.sendto(packet_ids[-1].encode(),client_address)   #sending ack
+        server_socket.sendto(packet_ids[-1].to_bytes(2,byteorder='big'),client_address)   #sending ack
