@@ -1,6 +1,6 @@
 from socket import *
 import time
-
+from datetime import datetime
 ReceiverIp = 'localhost'
 ReceiverPort = 1200
 MSS = 2040           #Maximum segment size
@@ -53,6 +53,10 @@ def sender(filee, receiver_port, ip_address):
             print("this is the packetid inside the while loop: " ,get_packetid(Packet))
             SenderSocket.sendto(Packet, (ip_address, receiver_port))
             print(f"Packet {NextSeqNum} sent..")
+            hour_time_of_sending= datetime.now().hour
+            minute_time_of_sending= datetime.now().minute
+            second_time_of_sending =datetime.now().second
+            print(f"Packet sent at: {hour_time_of_sending}:{minute_time_of_sending}:{second_time_of_sending}")
             if not Timer:  
                 StartTime = time.time()
                 Timer = True
@@ -77,4 +81,3 @@ def sender(filee, receiver_port, ip_address):
     SenderSocket.close()
 
 sender(filee, ReceiverPort, ReceiverIp)
-

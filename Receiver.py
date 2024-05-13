@@ -72,7 +72,7 @@ import io
 from random import randint
 import time
 import matplotlib.pyplot as plt
-
+from datetime import datetime
 
 def get_packetid(packet):
     packet_id=packet[:2]
@@ -95,7 +95,10 @@ variable=0
 received_times = []
 received_packet_ids = []
 lost_packets = []
+
 # retransmitted_packet_ids = []
+
+N=3  #window size
 while True:
     # print(variable)
     message, client_address = server_socket.recvfrom(2048)
@@ -117,9 +120,14 @@ while True:
             # continue
         else:
             packet_ids.append(packet_id)
+        # if(len(packet_ids)%N ==0):
         server_socket.sendto(packet_ids[-1].to_bytes(2,byteorder='big'),client_address) #sending ack
+        hour_time_of_sending= datetime.now().hour
+        minute_time_of_sending= datetime.now().minute
+        second_time_of_sending =datetime.now().second
+        print(f"Packet recieved at: {hour_time_of_sending}:{minute_time_of_sending}:{second_time_of_sending}")
         trailing=get_trailing(message)
-        print("this is the trailing: ", trailing)
+        # print("this is the trailing: ", trailing)
         message=get_data(message)
         # print("this is the data: ",message)
         data.append(message)
@@ -127,6 +135,7 @@ while True:
 
         received_times.append(time.time())
         received_packet_ids.append(packet_id)
+        
 
         if(trailing== b''):
             # print("im herrre")
