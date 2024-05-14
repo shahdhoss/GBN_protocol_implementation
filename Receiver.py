@@ -118,17 +118,19 @@ num_packets = len(received_packet_ids)
 average_transfer_rate_bytes = total_bytes_received / elapsed_time
 average_transfer_rate_packets = num_packets / elapsed_time
 
-transfer_stats = f"Start Time:\t{datetime.fromtimestamp(start_time)}\t" \
-                 f"End Time:\t{datetime.fromtimestamp(end_time)}\t" \
-                 f"Elapsed Time:\t{elapsed_time:.2f} sec\t" \
-                 f"Num. of Packets:\t{num_packets}\t" \
-                 f"Num. of Bytes:\t{total_bytes_received}\t" \
-                 f"Num. of Retrans.:\t{retransmissions}\t" \
-                 f"Avg. Transfer Rate (Bytes/sec):\t{average_transfer_rate_bytes:.2f}\t" \
-                 f"Avg. Transfer Rate (Pkts/sec):\t{average_transfer_rate_packets:.2f}"
+transfer_stats = f"Start Time: {datetime.fromtimestamp(start_time)}\n" \
+                 f"End Time: {datetime.fromtimestamp(end_time)}\n" \
+                 f"Elapsed Time: {elapsed_time:.2f} sec\n" \
+                 f"Num. of Packets: {num_packets}\n" \
+                 f"Num. of Bytes: {total_bytes_received}\n" \
+                 f"Num. of Retrans.: {retransmissions}\n" \
+                 f"Avg. Transfer Rate (Bytes/sec): {average_transfer_rate_bytes:.2f}\n" \
+                 f"Avg. Transfer Rate (Pkts/sec): {average_transfer_rate_packets:.2f}"
 
-# plt.text(0.02, -0.1, transfer_stats, fontsize=8, transform=plt.gca().transAxes, horizontalalignment='left', verticalalignment='top', multialignment='left')
+plt.subplots_adjust(bottom=0.3)
+
+plt.figtext(0.5, 0.02, transfer_stats, fontsize=9, ha='center', va='bottom', multialignment='left')
 
 plt.grid(True)
-plt.tight_layout()  
+plt.legend()
 plt.show()

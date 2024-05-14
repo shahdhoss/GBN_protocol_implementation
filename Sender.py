@@ -80,6 +80,7 @@ def sender(filee, receiver_port, ip_address):
                 StartTime = time.time()  # Restart the timer after retransmitting
 
     print("Packets are sent successfully!")
+    
     SenderSocket.close()
 
 sender(filee, ReceiverPort, ReceiverIp)
