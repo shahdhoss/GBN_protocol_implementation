@@ -34,18 +34,6 @@ def make_packets(flag, packet_id, data, file_id):
     Packet = packet_id + file_id + data + trailer_bits
     return Packet
 
-def resend(NextSeqNum, receiver_port, ip_address):
-    Packets = read(filee)
-    SenderSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    PacketLength = len(Packets)
-    Packet = make_packets(NextSeqNum == PacketLength - 1, NextSeqNum, Packets[NextSeqNum], 1)
-    SenderSocket.sendto(Packet, (ip_address, receiver_port))
-    print(f"Packet {NextSeqNum} resent..")
-    hour_time_of_sending = datetime.now().hour
-    minute_time_of_sending = datetime.now().minute
-    second_time_of_sending = datetime.now().second
-    print(f"Packet sent at: {hour_time_of_sending}:{minute_time_of_sending}:{second_time_of_sending}")
-
 def sender(filee, receiver_port, ip_address):
     Packets = read(filee)
     SenderSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
