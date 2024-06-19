@@ -7,5 +7,5 @@ The project aims to implement a transport protocol enhancing UDP's reliability t
 ## Simulated Loss:
 To simulate network conditions, random packet loss (5%-15%) is introduced by randomly dropping received packets at the receiver.
 
-##How to use:
+## How to use:
 To get started, clone the repository and install any necessary dependencies. After ensuring all dependencies are installed, run the receiver file first, followed by the sender file. You can observe the packets being sent directly in the console.
